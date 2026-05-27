@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 	"time"
 
@@ -35,7 +36,7 @@ func TestEmployeeList(t *testing.T) {
 	rows := sqlmock.NewRows(empCols).AddRow(
 		1, "EMP001", testTime, "John", "Doe", "", "M", testTime, testTime, testTime,
 	)
-	mock.ExpectQuery(sqlmock.QuoteMeta(
+	mock.ExpectQuery(regexp.QuoteMeta(
 		"SELECT emp_no, employee_id, date_of_birth, first_name, last_name, middle_names, gender, date_of_hiring, date_of_termination, date_of_probation_end FROM employee LIMIT 100",
 	)).WillReturnRows(rows)
 
@@ -60,7 +61,7 @@ func TestEmployeeGet(t *testing.T) {
 	row := sqlmock.NewRows(empCols).AddRow(
 		10001, "EMP10001", testTime, "John", "Doe", "", "M", testTime, testTime, testTime,
 	)
-	mock.ExpectQuery(sqlmock.QuoteMeta(
+	mock.ExpectQuery(regexp.QuoteMeta(
 		"SELECT emp_no, employee_id, date_of_birth, first_name, last_name, middle_names, gender, date_of_hiring, date_of_termination, date_of_probation_end FROM employee WHERE emp_no = ?",
 	)).WithArgs(10001).WillReturnRows(row)
 
@@ -90,7 +91,7 @@ func TestEmployeeGet_NotFound(t *testing.T) {
 	h, mock, cleanup := newMockEmployeeHandler(t)
 	defer cleanup()
 
-	mock.ExpectQuery(sqlmock.QuoteMeta(
+	mock.ExpectQuery(regexp.QuoteMeta(
 		"SELECT emp_no, employee_id, date_of_birth, first_name, last_name, middle_names, gender, date_of_hiring, date_of_termination, date_of_probation_end FROM employee WHERE emp_no = ?",
 	)).WithArgs(99999).WillReturnRows(sqlmock.NewRows(empCols))
 
@@ -107,7 +108,7 @@ func TestEmployeeCreate(t *testing.T) {
 	h, mock, cleanup := newMockEmployeeHandler(t)
 	defer cleanup()
 
-	mock.ExpectExec(sqlmock.QuoteMeta(
+	mock.ExpectExec(regexp.QuoteMeta(
 		"INSERT INTO employee (employee_id, date_of_birth, first_name, last_name, middle_names, gender, date_of_hiring, date_of_termination, date_of_probation_end) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 	)).WillReturnResult(sqlmock.NewResult(42, 1))
 
@@ -148,7 +149,7 @@ func TestEmployeeUpdate(t *testing.T) {
 	h, mock, cleanup := newMockEmployeeHandler(t)
 	defer cleanup()
 
-	mock.ExpectExec(sqlmock.QuoteMeta(
+	mock.ExpectExec(regexp.QuoteMeta(
 		"UPDATE employee SET employee_id = ?, date_of_birth = ?, first_name = ?, last_name = ?, middle_names = ?, gender = ?, date_of_hiring = ?, date_of_termination = ?, date_of_probation_end = ? WHERE emp_no = ?",
 	)).WillReturnResult(sqlmock.NewResult(0, 1))
 
@@ -189,7 +190,7 @@ func TestEmployeeDelete(t *testing.T) {
 	h, mock, cleanup := newMockEmployeeHandler(t)
 	defer cleanup()
 
-	mock.ExpectExec(sqlmock.QuoteMeta(
+	mock.ExpectExec(regexp.QuoteMeta(
 		"DELETE FROM employee WHERE emp_no = ?",
 	)).WithArgs(10001).WillReturnResult(sqlmock.NewResult(0, 1))
 
@@ -206,7 +207,7 @@ func TestEmployeeDelete_NotFound(t *testing.T) {
 	h, mock, cleanup := newMockEmployeeHandler(t)
 	defer cleanup()
 
-	mock.ExpectExec(sqlmock.QuoteMeta(
+	mock.ExpectExec(regexp.QuoteMeta(
 		"DELETE FROM employee WHERE emp_no = ?",
 	)).WithArgs(99999).WillReturnResult(sqlmock.NewResult(0, 0))
 
@@ -236,7 +237,7 @@ func TestEmployeeList_DBError(t *testing.T) {
 	h, mock, cleanup := newMockEmployeeHandler(t)
 	defer cleanup()
 
-	mock.ExpectQuery(sqlmock.QuoteMeta(
+	mock.ExpectQuery(regexp.QuoteMeta(
 		"SELECT emp_no, employee_id, date_of_birth, first_name, last_name, middle_names, gender, date_of_hiring, date_of_termination, date_of_probation_end FROM employee LIMIT 100",
 	)).WillReturnError(sql.ErrConnDone)
 

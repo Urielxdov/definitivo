@@ -10,13 +10,11 @@ import (
 )
 
 func TestHealthEndpoint_Healthy(t *testing.T) {
-	db, mock, err := sqlmock.New()
+	db, _, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("sqlmock.New: %v", err)
 	}
 	defer db.Close()
-
-	mock.ExpectPing()
 
 	router := setupRouter(db)
 	req := httptest.NewRequest("GET", "/health", nil)
@@ -29,7 +27,7 @@ func TestHealthEndpoint_Healthy(t *testing.T) {
 }
 
 func TestHealthEndpoint_DBDown(t *testing.T) {
-	db, mock, err := sqlmock.New()
+	db, mock, err := sqlmock.New(sqlmock.MonitorPingsOption)
 	if err != nil {
 		t.Fatalf("sqlmock.New: %v", err)
 	}
