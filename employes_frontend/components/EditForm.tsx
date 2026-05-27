@@ -20,6 +20,11 @@ const FIELDS: Record<EntityType, string[]> = {
   titles: ['emp_no', 'title', 'from_date', 'to_date'],
   dept_emp: ['emp_no', 'dept_no', 'from_date', 'to_date'],
   dept_manager: ['emp_no', 'dept_no', 'from_date', 'to_date'],
+  salary_groups: ['sg_name', 'base_salary', 'from_date', 'to_date'],
+  sg_emp: ['emp_no', 'sg_no', 'from_date', 'to_date'],
+  countries: ['iso', 'name', 'nicename', 'iso3', 'numcode', 'phonecode'],
+  regions: ['name', 'nicename', 'note', 'country'],
+  region_emp: ['emp_no', 'region_id', 'from_date', 'to_date'],
 };
 
 const ID_FIELD: Record<EntityType, string> = {
@@ -29,6 +34,11 @@ const ID_FIELD: Record<EntityType, string> = {
   titles: 'emp_no',
   dept_emp: 'emp_no',
   dept_manager: 'emp_no',
+  salary_groups: 'sg_no',
+  sg_emp: 'emp_no',
+  countries: 'id',
+  regions: 'id',
+  region_emp: 'emp_no',
 };
 
 function normalizeDefaults(item: Record<string, any>): Record<string, any> {

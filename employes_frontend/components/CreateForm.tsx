@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EntityType, Employee, Department, Salary, Title, DeptEmp, DeptManager } from '@/types/index';
+import { EntityType, Employee, Department, Salary, Title, DeptEmp, DeptManager, SalaryGroup, SgEmp, Country, Region, RegionEmp } from '@/types/index';
 import { schemas } from '@/lib/schemas';
 import { useCreateEntity } from '@/hooks/useApi';
 
@@ -11,7 +11,7 @@ interface CreateFormProps {
   onClose: () => void;
 }
 
-type FormData = Employee | Department | Salary | Title | DeptEmp | DeptManager;
+type FormData = Employee | Department | Salary | Title | DeptEmp | DeptManager | SalaryGroup | SgEmp | Country | Region | RegionEmp;
 
 const FIELDS: Record<EntityType, string[]> = {
   employees: ['employee_id', 'first_name', 'last_name', 'middle_names', 'gender', 'date_of_birth', 'date_of_hiring', 'date_of_termination', 'date_of_probation_end'],
@@ -20,6 +20,11 @@ const FIELDS: Record<EntityType, string[]> = {
   titles: ['emp_no', 'title', 'from_date', 'to_date'],
   dept_emp: ['emp_no', 'dept_no', 'from_date', 'to_date'],
   dept_manager: ['emp_no', 'dept_no', 'from_date', 'to_date'],
+  salary_groups: ['sg_name', 'base_salary', 'from_date', 'to_date'],
+  sg_emp: ['emp_no', 'sg_no', 'from_date', 'to_date'],
+  countries: ['iso', 'name', 'nicename', 'iso3', 'numcode', 'phonecode'],
+  regions: ['name', 'nicename', 'note', 'country'],
+  region_emp: ['emp_no', 'region_id', 'from_date', 'to_date'],
 };
 
 export default function CreateForm({ entity, onClose }: CreateFormProps) {
