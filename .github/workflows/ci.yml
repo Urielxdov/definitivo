@@ -22,10 +22,10 @@ jobs:
           cache-dependency-path: employes_backend/go.sum
 
       - name: Download dependencies
-        run: go mod download
+        run: go mod download -x
 
       - name: Run tests
-        run: go test ./... -v
+        run: go test -mod=mod ./... -v
 
   test-frontend:
     name: Frontend Tests (Jest)

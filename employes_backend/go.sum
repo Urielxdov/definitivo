@@ -1,4 +1,2 @@
-github.com/DATA-DOG/go-sqlmock v1.5.2 h1:OcvErNrskIM5mvnBXQ3/eLEKViquQy89P2J0qksTr8o=
-github.com/DATA-DOG/go-sqlmock v1.5.2/go.mod h1:w9XfhkwQvtIsMxmg8THwm37LAfJfqeS+osRoUkpe98=
 github.com/go-sql-driver/mysql v1.7.1 h1:lUIinVbN1DY0xBg0eMOzmmtGoHwWBbvnWubQUrtU8EI=
 github.com/go-sql-driver/mysql v1.7.1/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
