@@ -27,7 +27,7 @@ func TestHealthEndpoint_Healthy(t *testing.T) {
 }
 
 func TestHealthEndpoint_DBDown(t *testing.T) {
-	db, mock, err := sqlmock.New(sqlmock.MonitorPingsOption)
+	db, mock, err := sqlmock.New(sqlmock.MonitorPingsOption(true))
 	if err != nil {
 		t.Fatalf("sqlmock.New: %v", err)
 	}
