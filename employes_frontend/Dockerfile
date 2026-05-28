@@ -5,6 +5,7 @@ RUN npm ci
 
 FROM node:20-alpine AS builder
 WORKDIR /app
+ENV API_INTERNAL_URL=http://api:8080
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
@@ -12,6 +13,7 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
+ENV API_INTERNAL_URL=http://api:8080
 COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
